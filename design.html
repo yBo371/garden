@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden App Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #f0f2f5; }
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            border: 12px solid #1a1a1a;
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin: 20px auto;
+        }
+        .screen-content {
+            height: calc(100% - 80px);
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .screen-content::-webkit-scrollbar { display: none; }
+        .garden-bg {
+            background: linear-gradient(to bottom, #a8e0ff 0%, #def3f8 40%, #8bc34a 100%);
+        }
+        .land-slot {
+            perspective: 1000px;
+            transform: rotateX(20deg);
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .tab-active { color: #4caf50; }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen">
+
+    <div class="phone-frame shadow-2xl">
+        <div class="h-10 w-full flex justify-between items-center px-8 pt-4 z-50 absolute">
+            <span class="text-sm font-bold text-gray-700">9:41</span>
+            <div class="flex space-x-1">
+                <div class="w-4 h-4 rounded-full bg-gray-700"></div>
+                <div class="w-4 h-4 rounded-full bg-gray-700"></div>
+            </div>
+        </div>
+
+        <div id="main-content" class="screen-content">
+            </div>
+
+        <nav class="absolute bottom-0 w-full h-20 bg-white border-t flex justify-around items-center px-4 pb-4">
+            <button onclick="renderPage('garden')" class="flex flex-col items-center nav-btn" id="nav-garden">
+                <i data-lucide="sprout"></i>
+                <span class="text-xs mt-1">花园</span>
+            </button>
+            <button onclick="renderPage('market')" class="flex flex-col items-center nav-btn text-gray-400" id="nav-market">
+                <i data-lucide="shopping-cart"></i>
+                <span class="text-xs mt-1">市场</span>
+            </button>
+            <button onclick="renderPage('profile')" class="flex flex-col items-center nav-btn text-gray-400" id="nav-profile">
+                <i data-lucide="user"></i>
+                <span class="text-xs mt-1">我的</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        const pages = {
+            garden: `
+                <div class="garden-bg h-full relative p-6 pt-16">
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="glass-morphism rounded-full px-4 py-1 flex items-center shadow-sm">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center mr-2 text-white font-bold text-xs">L</div>
+                            <span class="font-bold text-green-800">Lv.12</span>
+                        </div>
+                        <div class="glass-morphism rounded-full px-4 py-1 flex items-center shadow-sm text-amber-600">
+                            <i data-lucide="coins" class="w-4 h-4 mr-1"></i>
+                            <span class="font-bold">2,480</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 mt-12 px-4">
+                        <div class="land-slot h-32 bg-amber-900/40 rounded-[40%] shadow-inner flex flex-col items-center justify-center relative">
+                            <img src="https://images.unsplash.com/photo-1592150621344-c7446300139b?auto=format&fit=crop&q=80&w=200" class="w-20 -mt-10 animate-bounce" alt="Flower">
+                            <div class="absolute -top-4 right-0 bg-red-500 rounded-full p-1 shadow-lg border-2 border-white">
+                                <i data-lucide="bug" class="w-4 h-4 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="land-slot h-32 bg-amber-900/40 rounded-[40%] shadow-inner flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1530836361253-215068444dcb?auto=format&fit=crop&q=80&w=200" class="w-16 -mt-8" alt="Flower">
+                        </div>
+                        <div class="land-slot h-32 bg-amber-900/40 rounded-[40%] shadow-inner flex items-center justify-center border-4 border-white/30 border-dashed">
+                             <i data-lucide="plus" class="text-white/50"></i>
+                        </div>
+                        <div class="land-slot h-32 bg-amber-800/60 rounded-[40%] shadow-inner flex items-center justify-center">
+                             <div class="animate-pulse text-blue-400"><i data-lucide="droplets" class="w-8 h-8"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 glass-morphism rounded-3xl p-3 flex space-x-4 shadow-2xl border border-white/50">
+                        <button class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shadow-sm"><i data-lucide="droplets"></i></button>
+                        <button class="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 shadow-sm"><i data-lucide="bug"></i></button>
+                        <button class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 shadow-sm"><i data-lucide="zap"></i></button>
+                        <button class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 shadow-sm"><i data-lucide="hand"></i></button>
+                    </div>
+                </div>
+            `,
+            market: `
+                <div class="p-6 pt-16 bg-orange-50 min-h-full">
+                    <h1 class="text-2xl font-bold text-amber-900 mb-6">鲜花市场</h1>
+                    <div class="flex space-x-2 mb-6">
+                        <button class="px-4 py-2 bg-amber-600 text-white rounded-full text-sm font-bold shadow-md">种子包</button>
+                        <button class="px-4 py-2 bg-white text-amber-900 rounded-full text-sm font-bold border border-amber-200">园艺工具</button>
+                        <button class="px-4 py-2 bg-white text-amber-900 rounded-full text-sm font-bold border border-amber-200">我的仓库</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-3 rounded-3xl shadow-sm border border-amber-100 relative">
+                            <img src="https://images.unsplash.com/photo-1526333632117-91f51673d6a8?auto=format&fit=crop&q=80&w=300" class="w-full h-28 object-cover rounded-2xl mb-2">
+                            <h3 class="font-bold text-amber-900">红玫瑰种子</h3>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-amber-600 font-bold flex items-center text-sm"><i data-lucide="coins" class="w-3 h-3 mr-1"></i> 50</span>
+                                <button class="bg-green-500 text-white p-1 rounded-lg"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded-3xl shadow-sm border border-amber-100">
+                            <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&q=80&w=300" class="w-full h-28 object-cover rounded-2xl mb-2">
+                            <h3 class="font-bold text-amber-900">向日葵种子</h3>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-amber-600 font-bold flex items-center text-sm"><i data-lucide="coins" class="w-3 h-3 mr-1"></i> 80</span>
+                                <button class="bg-green-500 text-white p-1 rounded-lg"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                         <div class="bg-white p-3 rounded-3xl shadow-sm border border-amber-100">
+                            <img src="https://images.unsplash.com/photo-1554631221-f9603e6808be?auto=format&fit=crop&q=80&w=300" class="w-full h-28 object-cover rounded-2xl mb-2">
+                            <h3 class="font-bold text-amber-900">仙人球种子</h3>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-amber-600 font-bold flex items-center text-sm"><i data-lucide="coins" class="w-3 h-3 mr-1"></i> 30</span>
+                                <button class="bg-green-500 text-white p-1 rounded-lg"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                         <div class="bg-white p-3 rounded-3xl shadow-sm border border-amber-100 opacity-60">
+                            <div class="w-full h-28 bg-gray-200 rounded-2xl flex items-center justify-center mb-2"><i data-lucide="lock" class="text-gray-400"></i></div>
+                            <h3 class="font-bold text-gray-500">稀有百合</h3>
+                            <span class="text-xs text-gray-400">Lv.15 解锁</span>
+                        </div>
+                    </div>
+                </div>
+            `,
+            profile: `
+                <div class="p-6 pt-16 bg-white min-h-full">
+                    <div class="flex items-center space-x-4 mb-8">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200" class="w-20 h-20 rounded-full border-4 border-green-100 shadow-sm">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">绿植爱好者</h2>
+                            <p class="text-gray-500 text-sm">花卉收藏进度：40%</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 rounded-3xl p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-green-800">鲜花图鉴</h3>
+                            <span class="text-xs text-green-600 font-bold">收集 4 / 12</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="aspect-square bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center p-2">
+                                <img src="https://images.unsplash.com/photo-1526333632117-91f51673d6a8?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 object-cover rounded-full mb-1">
+                                <span class="text-[10px] font-bold text-gray-700">玫瑰</span>
+                            </div>
+                            <div class="aspect-square bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center p-2 border-2 border-green-400">
+                                <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 object-cover rounded-full mb-1">
+                                <span class="text-[10px] font-bold text-gray-700">向日葵</span>
+                            </div>
+                            <div class="aspect-square bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center p-2">
+                                <img src="https://images.unsplash.com/photo-1530836361253-215068444dcb?auto=format&fit=crop&q=80&w=100" class="w-10 h-10 object-cover rounded-full mb-1">
+                                <span class="text-[10px] font-bold text-gray-700">薰衣草</span>
+                            </div>
+                            <div class="aspect-square bg-gray-100 rounded-2xl flex items-center justify-center opacity-40">
+                                <i data-lucide="help-circle" class="text-gray-400"></i>
+                            </div>
+                            <div class="aspect-square bg-gray-100 rounded-2xl flex items-center justify-center opacity-40">
+                                <i data-lucide="help-circle" class="text-gray-400"></i>
+                            </div>
+                            <div class="aspect-square bg-gray-100 rounded-2xl flex items-center justify-center opacity-40">
+                                <i data-lucide="help-circle" class="text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                         <div class="flex items-center p-4 bg-orange-50 rounded-2xl border border-orange-100">
+                            <i data-lucide="award" class="text-orange-500 mr-3"></i>
+                            <span class="text-sm font-bold text-orange-900">园艺大师：累计收获100朵鲜花</span>
+                         </div>
+                    </div>
+                </div>
+            `
+        };
+
+        function renderPage(pageKey) {
+            document.getElementById('main-content').innerHTML = pages[pageKey];
+            
+            // 更新导航图标颜色
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.add('text-gray-400', 'tab-active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('tab-active'));
+            document.getElementById(`nav-${pageKey}`).classList.remove('text-gray-400');
+            document.getElementById(`nav-${pageKey}`).classList.add('tab-active');
+            
+            // 重新渲染图标
+            lucide.createIcons();
+        }
+
+        // 初始化加载首页
+        renderPage('garden');
+    </script>
+</body>
+</html>
