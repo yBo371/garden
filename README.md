@@ -1,3 +1,5 @@
+**简体中文** · [English](./README_EN.md)
+
 # Garden App
 
 Garden App 是一个基于 Kotlin、Jetpack Compose 和 MVVM 架构实现的 Android 花园经营 Demo。应用围绕花田种植、市场购买、仓库库存、鲜花图鉴和个人成就展开，当前数据主要由内存状态和静态仓库数据驱动。
